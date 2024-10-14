@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ミライシード</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+:root {
+    --bg-color: #0a0a0a; /* さらに暗い背景色 */
+    --container-bg: #1a1a1a; /* コンテナの背景を暗く */
+    --text-color: #888; /* テキストカラーを薄いグレーにして見えにくく */
+    --accent-color: #333; /* アクセントカラーを暗い色に */
+    --message-bg: #1e1e1e; /* メッセージ背景もさらに暗く */
+}
+
+#links {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 12px; /* フォントサイズ */
+    color: rgba(100, 100, 100, 0.5); /* 半透明のグレーで目立たない色 */
+}
+
+#links button {
+    background-color: rgba(50, 50, 50, 0.3); /* 半透明の暗い背景色 */
+    color: rgba(100, 100, 100, 0.7); /* ボタンのテキスト色をやや明るめの暗い色 */
+    border: 1px solid rgba(100, 100, 100, 0.5); /* 半透明のボーダー色 */
+    padding: 5px 10px; /* ボタンのパディング */
+    margin: 5px 0; /* ボタンの間隔を調整 */
+    border-radius: 5px; /* ボタンの角を丸くする */
+    cursor: pointer;
+    font-size: 12px; /* フォントサイズ */
+    transition: background-color 0.3s ease; /* ホバー時の色変化をスムーズに */
+}
+
+#links button:hover {
+    background-color: rgba(70, 70, 70, 0.5); /* ホバー時に少し明るくする */
+}
+
+#links h3 {
+    color: rgba(100, 100, 100, 0.5); /* タイトルも半透明で目立たない色 */
+    font-size: 14px; /* タイトルを少し大きく */
+}
+
+
+
+
+
+
+
+
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+    font-size: 12px; /* 極端に小さいフォントサイズ */
+    letter-spacing: 1.5px; /* 文字間隔を詰める */
+    line-height: 1.5; /* 行間を通常に */
+}
+
+h1, h2, h3, p {
+    font-size: 8px; /* ヘッダも小さく */
+    color: var(--accent-color);
+}
+
+.container {
+    background-color: var(--container-bg);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7); /* 薄い影を追加 */
+    max-width: 400px;
+    width: 100%;
+    margin: 20px auto; /* 上下に余裕を持たせて中央揃え */
+    text-align: center;
+    border: 1px solid var(--accent-color); /* 見えにくい枠線 */
+}
+
+input, button {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid var(--accent-color); /* 見えにくいボーダー */
+    border-radius: 5px;
+    background-color: var(--container-bg);
+    color: var(--accent-color); /* 色を黒に近い色に */
+    font-size: 12px; /* ボタンと入力欄も小さく */
+}
+
+button {
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--container-bg); /* ホバー時に色を変えない */
+    color: var(--text-color);
+}
+
+.font-size-control input[type="range"] {
+    -webkit-appearance: none; /* デフォルトのスタイルを消す */
+    width: 100%; /* 幅を100%にする */
+    height: 4px; /* 高さを調整 */
+    background: rgba(50, 50, 50, 0.5); /* 半透明のダークグレー */
+    border-radius: 5px; /* 角を丸くする */
+    outline: none; /* デフォルトのアウトラインを消す */
+}
+
+.font-size-control input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; /* スライダーのデフォルトスタイルを消す */
+    appearance: none;
+    width: 10px; /* スライダーの幅 */
+    height: 10px; /* スライダーの高さ */
+    border-radius: 50%; /* 丸い形にする */
+    background: #ccc; /* 明るい色 */
+    cursor: pointer; /* カーソルをポインターに */
+}
+
+.font-size-control input[type="range"]::-moz-range-thumb {
+    width: 10px; /* スライダーの幅 */
+    height: 10px; /* スライダーの高さ */
+    border-radius: 50%; /* 丸い形にする */
+    background: #ccc; /* 明るい色 */
+    cursor: pointer; /* カーソルをポインターに */
+}
+
+
+
+#chat-box {
+    background-color: var(--message-bg);
+    padding: 10px;
+    border-radius: 5px;
+    height: 400px; /* 高さを広げる */
+    overflow-y: scroll; /* スクロールを有効に */
+    border: 1px solid var(--accent-color); /* 見えにくい枠線 */
+    margin-bottom: 20px; /* チャットボックスの下に余裕を持たせる */
+}
+
+.chat-message {
+    padding: 15px;
+    margin: 10px 0;
+    border-bottom: 1px solid var(--accent-color); /* 見えにくい境界線 */
+    color: var(--text-color);
+    word-wrap: break-word; /* 長い単語を折り返す */
+    font-size: 12px; /* メッセージも小さく */
+}
+
+.hidden {
+    display: none;
+}
+
+#image-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* 背景色を少し濃く */
+    justify-content: center;
+    align-items: center;
+    display: none; /* 初期状態は非表示 */
+    z-index: 10;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(1px); /* 軽くぼかす */
+}
+
+.font-size-control {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    align-items: center;
+    font-size: 10px; /* フォントサイズバーのラベルを少し大きめに */
+}
+
+#links {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 10px; /* リンク集のフォントサイズを小さめに */
+}
+
+#close-tab {
+    padding: 10px 20px;
+    font-size: 16px; /* ボタンを大きく見やすくする */
+    background-color: #111; /* タブを閉じるボタンを暗く */
+    color: #666;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+#close-tab:hover {
+    background-color: #222;
+}
+
+#dark-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000; /* 真っ黒にする */
+    opacity: 0; /* 初期は透明 */
+    transition: opacity 0.3s ease; /* フェードイン効果 */
+    pointer-events: none; /* 他の要素への操作を妨げない */
+    z-index: 1000;
+}
+
+    </style>
+</head>
+<body>
+
+    <div id="links">
+        <h3>リンク集</h3>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+
+            <li><button onclick="window.open('https://sassa12345.github.io/hey/', '_blank')">フォールガイズオンライン（大人数でもオススメだけどchromeのみ！!!!!）</button></li>
+            <li><button onclick="window.open('http://sassa2.starfree.jp/', '_blank')">マリオカートオンライン（オススメだけどchromeのみ！!!!!）</button></li>
+            <li><button onclick="window.open('https://turbowarp.org/825786928', '_blank')">Among Us オンライン</button></li>
+            <li><button onclick="window.open('https://turbowarp.org/468912080', '_blank')">テトリスオンライン</button></li>
+            <li><button onclick="window.open('https://turbowarp.org/875389667', '_blank')">オンリーアップオンライン</button></li>
+            <li><button onclick="window.open('https://turbowarp.org/570439194', '_blank')">スマブラオンライン</button></li>
+        </ul>
+    </div>
+    
+
+
+<div id="group-display" class="hidden">
+    <h2 id="current-group-name"></h2>
+</div>
+
+<div class="theme-toggle">
+    <button onclick="toggleTheme()">テーマ切り替え</button>
+</div>
+
+
+<div id="dark-screen"></div>
+
+
+<!-- クイズ画面 -->
+<div class="container" id="quiz-container">
+    <h1>クイズに答えてください</h1>
+    <p>耳が遠い人の下の名前は？</p>
+    <input type="text" id="quiz-answer" placeholder="答えを入力してください">
+    <button onclick="checkAnswer()">答えを送信</button>
+    <p id="quiz-result" style="color: var(--text-color);"></p>
+</div>
+
+
+
+
+
+
+<!-- グループ作成とログイン -->
+<div class="container hidden" id="group-ui">
+    <h2>グループ作成</h2>
+    <input type="text" id="group-name" placeholder="グループ名を入力">
+    <button onclick="createGroup()">グループを作成</button>
+
+    <h2>グループにログイン</h2>
+    <input type="text" id="login-group-name" placeholder="グループ名を入力">
+    <button onclick="loginGroup()">グループにログイン</button>
+
+    <h2>オープンチャット</h2>
+    <button onclick="enterOpenChat()">オープンチャットに入る</button>
+</div>
+
+<button id="close-tab" style="position: fixed; top: 10px; right: 10px; z-index: 1000;">タブを閉じる</button>
+
+<!-- 偽装画面 -->
+<div id="fake-screen" style="display:none; background-color:#f0f0f0; width:100%; height:100%; position:fixed; top:0; left:0; z-index:9999;">
+    <iframe src="https://cms.edu.city.hiroshima.jp/weblog/index.php?id=j1027" style="width:100%; height:100%; border:none;"></iframe>
+</div>
+
+
+
+<!-- チャット画面 -->
+<div id="chat-container" class="hidden">
+    <h2>グループチャット</h2>
+    <input type="text" id="name" placeholder="名前を入力してください">
+    <input type="text" id="message" placeholder="メッセージを入力してください">
+    <button onclick="sendMessage()">送信</button>
+    <div id="chat-box"></div>
+</div>
+
+<!-- フォントサイズ変更バー -->
+<div class="font-size-control">
+    <label for="font-size">フォントサイズ:</label>
+    <input type="range" id="font-size" min="8" max="20" value="12" onchange="changeFontSize()">
+</div>
+
+<!-- 画像表示用コンテナ -->
+<div id="image-container">
+    <img id="image" src="your-image-url.jpg" alt="表示する画像">
+</div>
+
+<script>
+    let currentGroup = '';
+let isAdminMode = false; // 管理者モードのフラグ
+
+function checkAnswer() {
+    const answer = document.getElementById('quiz-answer').value.trim();
+    const correctAnswers = ["モリリン豚","もりりん豚","もりりんぶた","さっさーてんさいさー","道枝", "みちえ", "mitie"]; // 管理者モード用とクイズの答え
+    const result = document.getElementById('quiz-result');
+
+if (["モリリン豚","もりりん豚","もりりんぶた","さっさーてんさいさー"].includes(answer)) {
+
+        isAdminMode = true; // 管理者モードに入る
+        result.textContent = "正解です！管理者モードに入りました。";
+        alert("管理者モードに入りました！");
+        document.getElementById('quiz-container').classList.add('hidden');
+        document.getElementById('group-ui').classList.remove('hidden'); // グループUIを表示
+    } else if (correctAnswers.includes(answer)) {
+        isAdminMode = false; // 通常モード
+        result.textContent = "正解です！チャットに進めます。";
+        document.getElementById('quiz-container').classList.add('hidden');
+        document.getElementById('group-ui').classList.remove('hidden'); // グループUIを表示
+    } else {
+        result.textContent = "不正解です。もう一度お試しください。";
+    }
+}
+
+
+function sendMessage() {
+    const message = document.getElementById('message').value.trim();
+    let name = document.getElementById('name').value.trim();
+
+    // 管理者モードの場合、名前を「管理者」に設定
+    if (isAdminMode) {
+        name = "管理者"; // 管理者モードでは名前を固定
+    }
+
+    // 禁止名リスト
+    const bannedNames = ["管理者", "さっさー", "ささき", "佐々木", "sasaki", "mt", "MT", "もつ"];
+
+    // 管理者モードでは禁止名リストのチェックをスキップ
+    if (!isAdminMode && bannedNames.includes(name)) {
+        alert("この名前は使用できません。");
+        return;
+    }
+
+    if (message === "" || name === "") {
+        alert("名前とメッセージを入力してください");
+        return;
+    }
+
+    // メッセージを送信する処理（サーバーとの通信）
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "save_message.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            loadMessages(); // メッセージ送信後にサーバーから再度メッセージを取得する
+            document.getElementById('message').value = ''; // メッセージ欄をクリア
+        }
+    };
+    xhr.send(`groupName=${encodeURIComponent(currentGroup)}&name=${encodeURIComponent(name)}&message=${encodeURIComponent(message)}`);
+}
+
+
+
+
+document.getElementById('close-tab').addEventListener('click', function() {
+    window.close(); // タブを閉じる
+});
+
+let isDarkScreenActive = false; // 初期状態は暗転していない
+
+document.addEventListener('keydown', function(event) {
+    if ( event.key === 'Escape' || event.ctrlKey) {
+        toggleDarkScreen();
+    }
+});
+
+function toggleDarkScreen() {
+    const darkScreen = document.getElementById('dark-screen');
+    
+    if (isDarkScreenActive) {
+        darkScreen.style.opacity = 0; // 透明に戻す
+        darkScreen.style.pointerEvents = 'none'; // 操作可能にする
+        isDarkScreenActive = false; // 状態を暗転していないにする
+    } else {
+        darkScreen.style.opacity = 1; // 真っ黒にする
+        darkScreen.style.pointerEvents = 'all'; // 操作不可にする
+        isDarkScreenActive = true; // 状態を暗転状態にする
+    }
+}
+
+
+
+
+
+
+
+
+
+    function toggleTheme() {
+        document.body.classList.toggle('light-theme');
+    }
+
+    function createGroup() {
+        const groupName = document.getElementById('group-name').value.trim();
+        if (groupName === "") {
+            alert("グループ名を入力してください");
+            return;
+        }
+        currentGroup = groupName;
+        alert(`グループ '${groupName}' が作成されました`);
+        document.getElementById('group-ui').classList.add('hidden');
+        document.getElementById('chat-container').classList.remove('hidden');
+        document.getElementById('current-group-name').textContent = `グループ名: ${groupName}`;
+        document.getElementById('group-display').classList.remove('hidden');
+    }
+
+    function loginGroup() {
+        const groupName = document.getElementById('login-group-name').value.trim();
+        if (groupName === "") {
+            alert("グループ名を入力してください");
+            return;
+        }
+        currentGroup = groupName;
+        alert(`グループ '${groupName}' にログインしました`);
+        document.getElementById('group-ui').classList.add('hidden');
+        document.getElementById('chat-container').classList.remove('hidden');
+        document.getElementById('current-group-name').textContent = `グループ名: ${groupName}`;
+        document.getElementById('group-display').classList.remove('hidden');
+        loadMessages(); // グループにログインしたらメッセージをロード
+    }
+
+    function enterOpenChat() {
+        currentGroup = 'openchat'; // オープンチャット用の特別なグループ名
+        document.getElementById('group-ui').classList.add('hidden');
+        document.getElementById('chat-container').classList.remove('hidden');
+        document.getElementById('current-group-name').textContent = "オープンチャット";
+        document.getElementById('group-display').classList.remove('hidden');
+        loadMessages(); // オープンチャットに入ったらメッセージをロード
+    }
+
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Tab') { // タブキーが押されたら
+        event.preventDefault(); // デフォルトのタブ動作をキャンセル
+        toggleFakeScreen();
+    }
+});
+
+function toggleFakeScreen() {
+    const fakeScreen = document.getElementById('fake-screen');
+
+    if (fakeScreen.style.display === 'none') {
+        fakeScreen.style.display = 'block'; // 偽装画面を表示
+    } else {
+        fakeScreen.style.display = 'none'; // 偽装画面を非表示
+    }
+}
+
+
+
+let lastMessages = []; // 最新のメッセージを追跡するための変数
+
+function loadMessages() {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", `get_messages.php?groupName=${currentGroup}`, true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            try {
+                const response = JSON.parse(xhr.responseText);
+                const chatBox = document.getElementById('chat-box');
+
+                // 新しいメッセージの取得
+                if (response.newMessages) {
+                    const newMessages = response.newMessages.split('<br>');
+
+                    newMessages.forEach(message => {
+                        if (!lastMessages.includes(message)) {
+                            const messageElement = document.createElement('div');
+                            messageElement.className = 'chat-message';
+                            messageElement.innerHTML = message;
+                            chatBox.prepend(messageElement); // 最新のメッセージを上に追加
+
+                            // 新しいメッセージがある場合に通知を表示
+                            if (Notification.permission === "granted") {
+                                new Notification("新しいメッセージ", {
+                                    body: message,
+                                    icon: "path/to/icon.png" // アイコンを指定
+                                });
+                            }
+                        }
+                    });
+
+                    lastMessages = newMessages; // 最新のメッセージを記録
+                }
+            } catch (error) {
+                console.error('JSONパースエラー:', error);
+                console.error('サーバーからのレスポンス:', xhr.responseText);
+            }
+        }
+    };
+    xhr.send();
+}
+
+
+
+
+
+
+
+// ページロード時に通知の許可をリクエスト
+window.onload = function() {
+    loadMessages(); // 初回すべてのメッセージを読み込み
+    setInterval(() => loadMessages(), 500); // 定期的にメッセージを取得
+
+    if (Notification.permission !== "granted") {
+        Notification.requestPermission().then(permission => {
+            if (permission === "granted") {
+                console.log("通知が許可されました");
+            } else {
+                console.log("通知が拒否されました");
+            }
+        });
+    }
+};
+
+
+function changeFontSize() {
+    const fontSize = document.getElementById('font-size').value + 'px';
+    document.querySelectorAll('.chat-message').forEach(message => {
+        message.style.fontSize = fontSize; // 各メッセージのフォントサイズを変更
+    });
+}
+
+</script>
+
+</body>
+</html>
+
